@@ -45,7 +45,7 @@ def getscore():
 @app.route("/insertmenu")
 def getscore():
 	client = MongoClient("mongodb+srv://6131866021:1234@cluster0-3xijp.mongodb.net/test?retryWrites=true&w=majority")
-	db = client.icanteen_menus
+	db = client.student_scores
 	file = open('menu.csv', 'r')
 	list_of_menu = []
 	for line in file:
@@ -61,11 +61,11 @@ def showmenu():
 	db = client.icanteen_menus
 	getid = request.args.get('store_number')
 	docs = db.menus.find({'store':int(getid)})
-	list_of_menu = []
+	r = []
 	for doc in docs:
 		ret = {'item':doc[0], 'store':int(doc[1]), 'cal':int(doc[2]), 'filter':doc[3], 'price':doc[4]}
-		list_of_menu.append(ret)
-	return jsonify(list_of_menu)
+		r.append(ret)
+	return jsonify(r)
 
 @app.route("/findscore")
 def findscore():
