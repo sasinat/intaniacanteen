@@ -52,3 +52,14 @@ def findscore():
 	r = dict()
 	r['data'] = ret
 	return jsonify(r)
+
+@app.route("/showscore")
+def showscore():
+	client = MongoClient("mongodb+srv://6131866021:1234@cluster0-3xijp.mongodb.net/test?retryWrites=true&w=majority")
+	db = client.student_scores
+	docs = db.scores.find({'quiz1':9})
+	allscore = []
+	for doc in docs:
+		ret = {'id':doc['id'], 'quiz1':doc['quiz1'], 'quiz2':doc['quiz2'], 'quiz3':doc['quiz3'], 'quiz4':doc['quiz4'], 'quiz5':doc['quiz5'], 'sum':doc['sum']}
+		allscore.append(ret)
+	return jsonify(allscore)
