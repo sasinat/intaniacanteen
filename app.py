@@ -43,27 +43,28 @@ def getscore():
 	return "upload done"
 
 @app.route("/insertmenu")
- def getscore():
+ def insertmenu():
  	client = MongoClient("mongodb+srv://6131866021:1234@cluster0-3xijp.mongodb.net/test?retryWrites=true&w=majority")
  	db = client.student_scores
  	file = open('menu.csv', 'r')
  	list_of_menu = []
  	for line in file:
  		menu = line.split(',')
- 		m = {'item':menu[0], 'store':int(menu[1]), 'cal':int(menu[2]), 'filter':menu[3], 'price':menu[4]}
+ 		m = {'item':menu[0], 'store':int(menu[4]), 'cal':int(menu[2]), 'filter':menu[1], 'price':menu[3]}
  		list_of_menu.append(m)
+	db.menus.delete_many({})
  	result = db.menus.insert_many(list_of_menu, ordered=False)
  	return "upload done"
 
  @app.route("/showmenu")
  def showmenu():
  	client = MongoClient("mongodb+srv://6131866021:1234@cluster0-3xijp.mongodb.net/test?retryWrites=true&w=majority")
- 	db = client.icanteen_menus
+ 	db = client.student_scores
  	getid = request.args.get('store_number')
  	docs = db.menus.find({'store':int(getid)})
  	r = []
  	for doc in docs:
- 		ret = {'item':doc[0], 'store':int(doc[1]), 'cal':int(doc[2]), 'filter':doc[3], 'price':doc[4]}
+ 		ret = {'item':doc[0], 'store':int(doc[4]), 'cal':int(doc[2]), 'filter':doc[1], 'price':doc[3]}
  		r.append(ret)
  	return jsonify(r)
 
