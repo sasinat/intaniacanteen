@@ -56,18 +56,6 @@ def getscore():
  	result = db.menus.insert_many(list_of_menu, ordered=False)
  	return "upload done"
 
- @app.route("/showmenu")
- def showmenu():
- 	client = MongoClient("mongodb+srv://6131866021:1234@cluster0-3xijp.mongodb.net/test?retryWrites=true&w=majority")
- 	db = client.student_scores
- 	getid = request.args.get('store_number')
- 	docs = db.menus.find({'store':int(getid)})
- 	r = []
- 	for doc in docs:
- 		ret = {'item':doc[0], 'store':int(doc[4]), 'cal':int(doc[2]), 'filter':doc[1], 'price':doc[3]}
- 		r.append(ret)
- 	return jsonify(r)
-
 @app.route("/findscore")
 def findscore():
 	client = MongoClient("mongodb+srv://6131866021:1234@cluster0-3xijp.mongodb.net/test?retryWrites=true&w=majority")
