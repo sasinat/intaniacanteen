@@ -28,7 +28,7 @@ def testjson():
     return jsonify(d)
 
 @app.route("/insertmenu")
- def insertmenu():
+def insertmenu():
  	client = MongoClient("mongodb+srv://6131866021:1234@cluster0-3xijp.mongodb.net/test?retryWrites=true&w=majority")
  	db = client.student_scores
  	file = open('menu.csv', 'r')
